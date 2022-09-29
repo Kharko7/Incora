@@ -1,3 +1,5 @@
+import { IApp, IProject, ITask, IUser } from "./interface";
+
 const uniqueID = () => {
   return Math.floor(Math.random() * Date.now());
 };
@@ -24,14 +26,14 @@ class Task implements ITask {
 
 class Project implements IProject {
   constructor(
-    public tasks: ITask[] = [],
+    public tasks: ITask[],
   ) { };
   addTask(task: ITask): void {
     this.tasks.push(task);
   };
-  editTask(newTask: Partial<ITask>, idTask: number | string): void {
-    this.tasks = this.tasks.map(task => {
-      if (task.id == idTask) {
+  editTask(newTask: Partial<ITask>, idTask: number): void {
+    const newTasks = this.tasks.map(task => {
+      if (task.id === idTask) {
         switch (Object.keys(newTask)[0]) {
           case 'title':
             return {
@@ -63,6 +65,8 @@ class Project implements IProject {
         }
       } else return task
     })
+       
+    
   };
   deleteTask(id: number): void {
     this.tasks = this.tasks.filter(task => task.id !== id);
@@ -94,9 +98,7 @@ const user2 = new User(2, 'Oleg');
 const task1 = new Task('task1', 10, false, user1);
 const task2 = new Task('task2', 30, true, user2);
 
-const editTask1: Partial<ITask> = {
-  title: 'title10',
-};
+//sdfsdfsfsdf
 
 const project1 = new Project([task1, task2]);
 

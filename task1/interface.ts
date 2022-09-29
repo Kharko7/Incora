@@ -1,11 +1,11 @@
-interface IApp {  
+export interface IApp {  
   name: string;
   setName(name: string): void;
   projects: IProject[];
   addProject(project: IProject): void;
 };
 
-interface IProject {
+export interface IProject {
   tasks: ITask[];
   addTask(task: ITask): void;
   editTask(newTask: Partial<ITask>, idTask: number | string): void;
@@ -14,12 +14,12 @@ interface IProject {
   getAllTasksByDeveloper(id: number): ITask[];
 };
 
-interface IUser {
+export interface IUser {
   id: number;
   name: string;
 };
 
-interface ITask {
+export interface ITask {
   id: number;
   title: string,
   durationInMin: number;
