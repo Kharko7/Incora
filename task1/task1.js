@@ -95,4 +95,3 @@ const editTask1 = {
 };
 const project1 = new Project([task1, task2]);
 const app1 = new App('test1', [project1]);
-console.log(app1);
