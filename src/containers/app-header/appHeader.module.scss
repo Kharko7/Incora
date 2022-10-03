@@ -1,0 +1,12 @@
+@import "../../styles/custom/variable.scss";
+
+.header {
+  grid-area: header;
+  background: #d27c19!important;
+  height: $headerHeight;
+  display: flex;
+  justify-content: center;
+}
+.body {
+  display: flex;
+}

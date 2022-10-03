@@ -29,20 +29,16 @@ const Pagination = ({
   onChangePage,
 }: PaginationProps) => {
   const quantityOfPages: number = Math.ceil(totalItems / perPage);
-  const quantityButtonsShow: number = 3;
+  const quantityButtonsShow: number = 5;
   const arrayDigits: number[] = getArrayNumbersFromNumber(quantityOfPages);
   const arrayItems: number[][] = splitItemsOnArraysInArray(arrayDigits, quantityButtonsShow);
   const activePageIndex: number = arrayItems.findIndex((array) => array.includes(activePage));
 
   const handlePreviousPage = (): void => {
-    if (activePage !== 1) {
-      onChangePage(activePage - 1);
-    };
+    onChangePage(activePage - 1);
   }
   const handleNextPage = (): void => {
-    if (activePage !== quantityOfPages) {
-      onChangePage(activePage + 1);
-    };
+    onChangePage(activePage + 1);
   };
 
   const btnClass = (isActive: boolean) => {
@@ -56,13 +52,14 @@ const Pagination = ({
 
   return (
     <nav className={cx('pagination')}>
-      <button
+      {withActions && <button
         onClick={handlePreviousPage}
+        disabled={activePage === 1}
         style={withActions ? {} : { display: 'none' }}
         className={cx((activePage === 1) ? 'navigate' : ['navigate', 'active'])}
       >
         Previous
-      </button>
+      </button>}
       <ul className={cx('paginationItem')} >
         {arrayItems[activePageIndex].map((page) => (
           <li key={page}>
@@ -75,13 +72,14 @@ const Pagination = ({
           </li>
         ))}
       </ul>
-      <button
+      {withActions && <button
         onClick={handleNextPage}
+        disabled={activePage === quantityOfPages}
         style={withActions ? {} : { display: 'none' }}
         className={cx((activePage === quantityOfPages) ? 'navigate' : ['navigate', 'active'])}
       >
         Next
-      </button>
+      </button>}
     </nav>
   );
 };

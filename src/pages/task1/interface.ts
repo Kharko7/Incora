@@ -26,5 +26,4 @@ export interface ITask {
   completed: boolean;
   developer: IUser;
   getInfo(): string;
-  //get string in format `#${id} ${title} ${"completed" | "not completed"}`
 };
