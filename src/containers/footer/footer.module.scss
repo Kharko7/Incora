@@ -1,0 +1,19 @@
+.footer {
+  grid-area: footer;
+  background-color: #263238;
+  color: #eceff1;
+  z-index: 10;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+.terms {
+  & :last-child::before {
+    content: " • ";
+  }
+}

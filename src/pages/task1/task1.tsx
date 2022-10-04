@@ -65,8 +65,8 @@ class Project implements IProject {
         }
       } else return task
     })
-       
-    
+
+
   };
   deleteTask(id: number): void {
     this.tasks = this.tasks.filter(task => task.id !== id);
@@ -92,17 +92,23 @@ class App implements IApp {
   };
 };
 
-const user1 = new User(1, 'Yaroslav');
-const user2 = new User(2, 'Oleg');
+const Task1 = () => {
+  const user1 = new User(1, 'Yaroslav');
+  const user2 = new User(2, 'Oleg');
 
-const task1 = new Task('task1', 10, false, user1);
-const task2 = new Task('task2', 30, true, user2);
+  const task1 = new Task('task1', 10, false, user1);
+  const task2 = new Task('task2', 30, true, user2);
 
-//sdfsdfsfsdf
+  const project1 = new Project([task1, task2]);
 
-const project1 = new Project([task1, task2]);
+  const app1 = new App('test1', [project1]);
 
-const app1 = new App('test1', [project1]);
-console.log(app1)
+  return (
+    <div>
+      <pre>{JSON.stringify(app1, null, 2)}</pre>
 
+    </div>
+  )
+}
 
+export default Task1
