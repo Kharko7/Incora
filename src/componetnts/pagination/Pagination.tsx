@@ -1,9 +1,9 @@
 import styles from './pagination.module.scss'
 import classNames from 'classnames/bind';
 import { getArrayNumbersFromNumber, splitItemsOnArraysInArray } from '../../utils/pagination';
+import { usePagination } from '../../hooks/usePagination';
 
 interface PaginationProps {
-  activePage: number;
   totalItems: number;
   perPage: number;
   withActions?: boolean;
@@ -11,7 +11,6 @@ interface PaginationProps {
     btn?: string;
     activeBtn?: string;
   };
-  onChangePage: (newPage: number) => void;
 };
 
 const cx = classNames.bind(styles);
@@ -21,25 +20,18 @@ const defaultBtnStyles = {
 }
 
 const Pagination = ({
-  activePage,
   totalItems,
   perPage,
   withActions = true,
   classes = defaultBtnStyles,
-  onChangePage,
 }: PaginationProps) => {
+
+  const { page, nexPage, prevPage, setActivePage } = usePagination(1)
   const quantityOfPages: number = Math.ceil(totalItems / perPage);
   const quantityButtonsShow: number = 5;
   const arrayDigits: number[] = getArrayNumbersFromNumber(quantityOfPages);
   const arrayItems: number[][] = splitItemsOnArraysInArray(arrayDigits, quantityButtonsShow);
-  const activePageIndex: number = arrayItems.findIndex((array) => array.includes(activePage));
-
-  const handlePreviousPage = (): void => {
-    onChangePage(activePage - 1);
-  }
-  const handleNextPage = (): void => {
-    onChangePage(activePage + 1);
-  };
+  const activePageIndex: number = arrayItems.findIndex((array) => array.includes(page));
 
   const btnClass = (isActive: boolean) => {
     let buttonClass: string;
@@ -53,30 +45,30 @@ const Pagination = ({
   return (
     <nav className={cx('pagination')}>
       {withActions && <button
-        onClick={handlePreviousPage}
-        disabled={activePage === 1}
+        onClick={prevPage}
+        disabled={page === 1}
         style={withActions ? {} : { display: 'none' }}
-        className={cx((activePage === 1) ? 'navigate' : ['navigate', 'active'])}
+        className={cx((page === 1) ? 'navigate' : ['navigate', 'active'])}
       >
         Previous
       </button>}
       <ul className={cx('paginationItem')} >
-        {arrayItems[activePageIndex].map((page) => (
-          <li key={page}>
+        {arrayItems[activePageIndex].map((pages) => (
+          <li key={pages}>
             <button
-              className={btnClass(activePage === page)}
-              onClick={() => onChangePage(page)}
+              className={btnClass(page === pages)}
+              onClick={() => setActivePage(pages)}
             >
-              {page}
+              {pages}
             </button>
           </li>
         ))}
       </ul>
       {withActions && <button
-        onClick={handleNextPage}
-        disabled={activePage === quantityOfPages}
+        onClick={nexPage}
+        disabled={page === quantityOfPages}
         style={withActions ? {} : { display: 'none' }}
-        className={cx((activePage === quantityOfPages) ? 'navigate' : ['navigate', 'active'])}
+        className={cx((page === quantityOfPages) ? 'navigate' : ['navigate', 'active'])}
       >
         Next
       </button>}
