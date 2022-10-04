@@ -1,5 +1,5 @@
 import routes from '../configs/routes';
-import { useState, useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Task2 from '../pages/task2/App';
 import Settings from '../pages/task3/Settings';
@@ -10,20 +10,13 @@ import { AuthorizationContext } from '../context/authorizationContext';
 
 const Routes = () => {
   const { pathToPagination, pathToTask1, pathToSettings, pathToSetSettings } = routes
-  const authorizationContexts = useContext(AuthorizationContext)
-  const [isAuth, setIsAuth] = useState<number>(0)
-
-  useEffect(() => {
-    if (typeof authorizationContexts?.auth == 'number') {
-      setIsAuth(authorizationContexts.auth)
-    }
-  }, [authorizationContexts])
+  const { auth } = useContext(AuthorizationContext)
 
   return (
     <Switch  >
-      <Route path={pathToTask1} component={Task1} />
+      <Route path={pathToTask1} exact component={Task1} />
       <Route path={pathToPagination} component={Task2} />
-      <ProtectedRoute path={pathToSettings} component={Settings} redirectTo={pathToSetSettings} isAuth={isAuth ? isAuth : 0} />
+      <ProtectedRoute path={pathToSettings} component={Settings} redirectTo={pathToSetSettings} isAuth={auth} />
       <Route path={pathToSetSettings} component={SetSettings} />
     </Switch >
   )

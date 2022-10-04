@@ -6,7 +6,7 @@ interface Routes {
 }
 
 const routes: Routes = {
-  pathToTask1: '/task1',
+  pathToTask1: '/',
   pathToPagination: '/pagination',
   pathToSettings: '/settings',
   pathToSetSettings: '/set-settings',

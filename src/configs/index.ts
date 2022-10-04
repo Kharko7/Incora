@@ -16,7 +16,7 @@ interface Footer {
 
 export const config: Config = {
   sideBarRouters: [{
-    to: "/task1",
+    to: "/",
     content: 'Task1',
 
   }, {

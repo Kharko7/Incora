@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { IconButton, Box, AppBar, Typography, Container, Switch } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Box, AppBar, Typography, Container, Switch } from '@mui/material';
 import styles from './appHeader.module.scss'
 import classNames from 'classnames/bind';
 import { NavLink } from 'react-router-dom';
@@ -10,21 +9,15 @@ const cx = classNames.bind(styles);
 
 const AppHeader = () => {
 
-  const isAuth1 = Number(localStorage.getItem('isAuth'));
-  const authorizationContexts = useContext(AuthorizationContext)
+  const isAuth = Number(localStorage.getItem('isAuth'));
+  const [checked, setChecked] = useState<boolean>(!!isAuth);
+  const { setAuth } = useContext(AuthorizationContext);
 
   useEffect(() => {
-    authorizationContexts?.setAuth(isAuth1)
-  }, [authorizationContexts, isAuth1])
+    setAuth(isAuth)
+  }, [setAuth, isAuth]);
 
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-
-  const [checked, setChecked] = useState<boolean>(!!isAuth1);
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.target.checked ?
       localStorage.setItem('isAuth', '1') :
       localStorage.setItem('isAuth', '0')
@@ -44,18 +37,6 @@ const AppHeader = () => {
             alignItems: 'center',
           }}
         >
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
           <Typography
             variant="h6"
             component={NavLink}
@@ -78,7 +59,7 @@ const AppHeader = () => {
             <Switch
               checked={checked}
               color="success"
-              onChange={handleChange}
+              onChange={handleChangeSwitch}
             />
             <Typography variant='caption'>
               On
