@@ -47,7 +47,6 @@ const Pagination = ({
       {withActions && <button
         onClick={prevPage}
         disabled={page === 1}
-        style={withActions ? {} : { display: 'none' }}
         className={cx((page === 1) ? 'navigate' : ['navigate', 'active'])}
       >
         Previous
@@ -67,7 +66,6 @@ const Pagination = ({
       {withActions && <button
         onClick={nexPage}
         disabled={page === quantityOfPages}
-        style={withActions ? {} : { display: 'none' }}
         className={cx((page === quantityOfPages) ? 'navigate' : ['navigate', 'active'])}
       >
         Next
